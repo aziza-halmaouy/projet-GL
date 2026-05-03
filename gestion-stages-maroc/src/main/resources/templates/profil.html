@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Profil utilisateur</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            margin: 0;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            width: 40%;
+            margin: auto;
+        }
+
+        /* ✅ CARD BLANCHE */
+        .card {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 3px 12px rgba(0,0,0,0.15);
+        }
+
+        .card p {
+            margin: 12px 0;
+            color: #333;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input:focus {
+            border-color: #4facfe;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            background-color: #4facfe;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #00c6fb;
+        }
+
+        .links {
+            text-align: center;
+            margin-top: 15px;
+        }
+
+        .links a {
+            text-decoration: none;
+            color: #2b6cb0;
+            margin: 0 10px;
+        }
+
+        .links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>👤 Profil utilisateur</h1>
+
+<div class="container">
+    <div class="card">
+
+        <form action="/profil/edit" method="post" th:object="${user}">
+
+            <p>📝 Nom :
+                <input type="text" th:field="*{nom}" />
+            </p>
+
+            <p>📝 Prénom :
+                <input type="text" th:field="*{prenom}" />
+            </p>
+
+            <p>📧 Email :
+                <input type="email" th:field="*{email}" readonly />
+            </p>
+
+            <p>📱 Téléphone :
+                <input type="text" th:field="*{telephone}" />
+            </p>
+
+            <p>🏫 École :
+                <input type="text" th:field="*{ecole}" />
+            </p>
+
+            <p>🏠 Adresse :
+                <input type="text" th:field="*{adresse}" />
+            </p>
+
+            <p>🎓 Niveau scolaire :
+                <input type="text" th:field="*{niveauScolaire}" />
+            </p>
+
+            <button type="submit">💾 Sauvegarder</button>
+
+        </form>
+
+        <div class="links">
+            <a href="/dashboard">🏠 Dashboard</a> |
+            <a href="/offres">📋 Offres</a> |
+            <a href="/candidatures">📄 Candidatures</a> |
+            <a href="/logout">🚪 Déconnexion</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
