@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Tableau de bord</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .dashboard-container {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+            width: 400px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: block;
+            margin: 15px auto;
+            padding: 15px;
+            width: 250px;
+            background-color: #4facfe;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .btn:hover {
+            background-color: #00c6fb;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+<div class="dashboard-container">
+    <h1>👋 Bienvenue <span th:text="${userName}"></span></h1>
+
+    <a class="btn" href="/offres">💼 Offres de stage</a>
+    <a class="btn" href="/candidatures">📑 Mes candidatures</a>
+    <a class="btn" href="/profil">👤 Mon profil</a>
+    <a class="btn" href="/logout">🚪 Déconnexion</a>
+</div>
+
+</body>
+</html>
+
