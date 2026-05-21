@@ -1,0 +1,39 @@
+[33maceca05[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Switch deployment from Render to Railway
+[33mde78694[m Add GitHub Actions build
+[33m1015c92[m Add GitHub Actions build
+[33m8a3c031[m update application properties
+[33m90fa270[m config: update application.properties for Railway Postgres
+[33m7938873[m fix: switch to PostgreSQL driver
+[33mcbc581c[m ci: fix Railway workflow using mvn instead of mvnw
+[33m34acd42[m ci: fix Railway workflow with JDK 21
+[33mfe38a0d[m config: update application.properties for Postgres on Railway
+[33m612483e[m ci: adapt workflow for Railway deployment
+[33m51d5c30[m fix: use eclipse-temurin base image for Railway
+[33m35d4411[m chore: unify server port to 8080
+[33mddf7380[m ci: update deploy.yml for Render deployment
+[33m635438c[m mysql config
+[33ma803455[m ci: update workflow configuration
+[33med8ea65[m add Dockerfile
+[33mc205ff8[m ci: add deploy workflow
+[33m34d6564[m ci: add GitHub Actions workflow
+[33m6f82fc3[m ci: trigger workflow
+[33mefa59e0[m fix: add H2 dependency for tests
+[33m7d2fb96[m test: add H2 config for CI/CD
+[33md0c4bfd[m fix: set working directory for Maven
+[33mdb98f29[m ci: add GitHub Actions workflow
+[33mfd86ee7[m ci: add GitHub Actions workflow
+[33m93a45e5[m add CI workflow
+[33mb813224[m ci: add GitHub Actions workflow
+[33m09bf243[m Delete .github/workflows directory
+[33m361c4f9[m Update CI/CD pipeline for Maven and Node.js
+[33m0ef987a[m Merge pull request #4 from ikram-mountassir/feature-frontend
+[33m6d80b58[m Ajout du frontend (templates et static)
+[33m3233222[m Merge pull request #3 from Ikram Mountassir/feature-frontend
+[33m55585b5[m rename backend folder
+[33mcc1dd5f[m add unit and integration tests for backend
+[33m792102d[m Merge pull request #2 from aziza-halmaouy/feature-backend
+[33mb0bc6dc[m add unit tests for backend (service, repository, controller)
+[33mec6fc3c[m Merge pull request #1 from aziza-halmaouy/feature-backend
+[33m6cecec6[m add backend Spring Boot
+[33me67cd11[m ajout frontend
+[33m6a3b34b[m[33m ([m[1;31morigin/dev[m[33m, [m[1;32mdev[m[33m)[m Initial commit
