@@ -1,4 +1,4 @@
-name: Build Spring Boot for Railway
+name: Build Spring Boot for Render
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up JDK 21
@@ -21,4 +21,3 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean package -DskipTests
-        working-directory: gestion-stages-maroc
