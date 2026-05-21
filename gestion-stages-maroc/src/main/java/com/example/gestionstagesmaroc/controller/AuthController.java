@@ -12,7 +12,6 @@ public class AuthController {
 
     private final UserRepository userRepo;
 
-
     public AuthController(UserRepository userRepo) {
         this.userRepo = userRepo;
     }
@@ -25,9 +24,39 @@ public class AuthController {
     @PostMapping("/login")
     public String loginSubmit(@RequestParam String email,
                               @RequestParam String password,
-                              HttpSession session) {
+                              HttpSession session,
+                              Model model) {
+        User user = userRepo.findByEmail(email);
+        if (user == null || !user.getPassword().equals(password)) {
+            model.addAttribute("error", "Email ou mot de passe incorrect");
+            return "login";
+        }
         session.setAttribute("userEmail", email);
         return "redirect:/dashboard";
+    }
+
+    @GetMapping("/register")
+    public String registerPage() {
+        return "register";
+    }
+
+    @PostMapping("/register")
+    public String registerSubmit(@RequestParam String nom,
+                                 @RequestParam String prenom,
+                                 @RequestParam String email,
+                                 @RequestParam String password,
+                                 Model model) {
+        if (userRepo.findByEmail(email) != null) {
+            model.addAttribute("error", "Cet email est déjà utilisé !");
+            return "register";
+        }
+        User user = new User();
+        user.setNom(nom);
+        user.setPrenom(prenom);
+        user.setEmail(email);
+        user.setPassword(password);
+        userRepo.save(user);
+        return "redirect:/login?registered";
     }
 
     @GetMapping("/dashboard")
