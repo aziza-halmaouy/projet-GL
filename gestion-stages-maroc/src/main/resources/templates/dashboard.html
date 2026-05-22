@@ -3,60 +3,87 @@
 <head>
     <title>Tableau de bord</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f5f9f6; }
+        .navbar {
+            background: linear-gradient(135deg, #0f4c2a, #1a6b3c);
+            padding: 14px 32px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid #c9a84c;
         }
-
-        .dashboard-container {
-            background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
-            width: 400px;
-            text-align: center;
+        .brand { color: #f0d080; font-size: 20px; font-weight: bold; letter-spacing: 1px; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: rgba(240,208,128,0.85); text-decoration: none; font-size: 14px; }
+        .nav-links a:hover { color: #f0d080; }
+        .content { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        .welcome {
+            background: linear-gradient(135deg, #0f4c2a, #1a6b3c);
+            border-radius: 16px; padding: 28px 32px; color: white;
+            margin-bottom: 24px; border-left: 4px solid #c9a84c;
         }
-
-        h1 {
-            color: #333;
-            margin-bottom: 25px;
+        .welcome h2 { font-size: 22px; color: #f0d080; margin-bottom: 6px; }
+        .welcome p { font-size: 14px; opacity: 0.85; }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px; }
+        .stat {
+            background: white; border-radius: 12px; padding: 18px;
+            text-align: center; border-top: 3px solid #c9a84c;
+            box-shadow: 0 2px 8px rgba(15,76,42,0.08);
         }
-
-        .btn {
-            display: block;
-            margin: 15px auto;
-            padding: 15px;
-            width: 250px;
-            background-color: #4facfe;
-            color: white;
-            text-decoration: none;
-            border-radius: 8px;
-            font-size: 16px;
-            transition: background 0.3s, transform 0.2s;
+        .stat .num { font-size: 30px; font-weight: bold; color: #1a6b3c; }
+        .stat .lbl { font-size: 12px; color: #6b7280; margin-top: 4px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+        .action {
+            background: white; border-radius: 14px; padding: 20px;
+            display: flex; align-items: center; gap: 16px;
+            border: 1px solid #d4e8db; text-decoration: none;
+            box-shadow: 0 2px 8px rgba(15,76,42,0.06);
+            transition: border-color 0.2s, transform 0.2s;
         }
-
-        .btn:hover {
-            background-color: #00c6fb;
-            transform: scale(1.05);
+        .action:hover { border-color: #c9a84c; transform: translateY(-2px); }
+        .icon {
+            width: 48px; height: 48px; border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 22px;
         }
+        .ic1 { background: #e8f5ee; }
+        .ic2 { background: #fdf8ec; }
+        .ic3 { background: #d4e8db; }
+        .ic4 { background: #fef3c7; }
+        .action h4 { font-size: 15px; font-weight: bold; color: #0f4c2a; margin-bottom: 2px; }
+        .action p { font-size: 12px; color: #9ca3af; }
     </style>
 </head>
 <body>
-
-<div class="dashboard-container">
-    <h1>👋 Bienvenue <span th:text="${userName}"></span></h1>
-
-    <a class="btn" href="/offres">💼 Offres de stage</a>
-    <a class="btn" href="/candidatures">📑 Mes candidatures</a>
-    <a class="btn" href="/profil">👤 Mon profil</a>
-    <a class="btn" href="/logout">🚪 Déconnexion</a>
+<div class="navbar">
+    <div class="brand">🌿 StageMaroc</div>
+    <div class="nav-links">
+        <a href="/offres">Offres</a>
+        <a href="/candidatures">Candidatures</a>
+        <a href="/profil">Profil</a>
+        <a href="/logout">Déconnexion</a>
+    </div>
 </div>
-
+<div class="content">
+    <div class="welcome">
+        <h2>Bonjour, <span th:text="${userName}"></span> ✨</h2>
+        <p>Bienvenue sur votre espace de gestion de stages au Maroc</p>
+    </div>
+    <div class="grid">
+        <a class="action" href="/offres">
+            <div class="icon ic1">💼</div>
+            <div><h4>Offres de stage</h4><p>Parcourir les offres</p></div>
+        </a>
+        <a class="action" href="/candidatures">
+            <div class="icon ic2">📑</div>
+            <div><h4>Mes candidatures</h4><p>Suivre mes demandes</p></div>
+        </a>
+        <a class="action" href="/profil">
+            <div class="icon ic3">👤</div>
+            <div><h4>Mon profil</h4><p>Modifier mes infos</p></div>
+        </a>
+        <a class="action" href="/logout">
+            <div class="icon ic4">🚪</div>
+            <div><h4>Déconnexion</h4><p>Quitter la session</p></div>
+        </a>
+    </div>
+</div>
 </body>
 </html>
-

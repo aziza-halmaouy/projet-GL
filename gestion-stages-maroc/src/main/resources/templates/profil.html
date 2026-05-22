@@ -1,136 +1,106 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Profil utilisateur</title>
-
+    <title>Mon profil</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to right, #4facfe, #00f2fe);
-            margin: 0;
-            padding: 30px;
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: Arial, sans-serif; background: #f5f9f6; }
+        .navbar {
+            background: linear-gradient(135deg, #0f4c2a, #1a6b3c);
+            padding: 14px 32px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px solid #c9a84c;
         }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 30px;
+        .brand { color: #f0d080; font-size: 20px; font-weight: bold; }
+        .nav-links { display: flex; gap: 20px; }
+        .nav-links a { color: rgba(240,208,128,0.85); text-decoration: none; font-size: 14px; }
+        .nav-links a:hover { color: #f0d080; }
+        .content { max-width: 650px; margin: 36px auto; padding: 0 20px; }
+        .profil-header {
+            background: linear-gradient(135deg, #0f4c2a, #1a6b3c);
+            border-radius: 16px; padding: 24px 28px;
+            display: flex; align-items: center; gap: 18px;
+            margin-bottom: 24px; border: 1px solid #c9a84c;
         }
-
-        .container {
-            width: 40%;
-            margin: auto;
+        .avatar {
+            width: 64px; height: 64px; border-radius: 50%;
+            background: linear-gradient(135deg, #c9a84c, #f0d080);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; font-weight: bold; color: #0f4c2a;
         }
-
-        /* ✅ CARD BLANCHE */
-        .card {
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0px 3px 12px rgba(0,0,0,0.15);
+        .profil-header h2 { color: #f0d080; font-size: 20px; margin-bottom: 4px; }
+        .profil-header p { color: rgba(255,255,255,0.75); font-size: 13px; }
+        .form-card {
+            background: white; border-radius: 16px; padding: 28px;
+            border: 1px solid #d4e8db;
+            box-shadow: 0 2px 12px rgba(15,76,42,0.08);
         }
-
-        .card p {
-            margin: 12px 0;
-            color: #333;
-            font-weight: bold;
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 18px; }
+        .form-field label {
+            display: block; font-size: 11px; font-weight: bold;
+            color: #1a6b3c; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px;
         }
-
-        input {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+        .form-field input {
+            width: 100%; padding: 10px 13px;
+            border: 1.5px solid #d4e8db; border-radius: 8px;
+            font-size: 14px; color: #0f4c2a; background: #f5f9f6;
         }
-
-        input:focus {
-            border-color: #4facfe;
-            outline: none;
-        }
-
+        .form-field input:focus { border-color: #1a6b3c; outline: none; }
+        .form-field input[readonly] { background: #e8f5ee; color: #6b7280; }
         button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 15px;
-            background-color: #4facfe;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            padding: 11px 28px;
+            background: linear-gradient(135deg, #1a6b3c, #c9a84c);
+            color: white; border: none; border-radius: 8px;
+            font-size: 14px; font-weight: bold; cursor: pointer; margin-top: 8px;
         }
-
-        button:hover {
-            background-color: #00c6fb;
-        }
-
-        .links {
-            text-align: center;
-            margin-top: 15px;
-        }
-
-        .links a {
-            text-decoration: none;
-            color: #2b6cb0;
-            margin: 0 10px;
-        }
-
-        .links a:hover {
-            text-decoration: underline;
-        }
+        button:hover { opacity: 0.92; }
+        .footer-links { text-align: center; margin-top: 20px; }
+        .footer-links a { color: #1a6b3c; text-decoration: none; margin: 0 10px; font-size: 13px; font-weight: bold; }
     </style>
 </head>
-
 <body>
-
-<h1>👤 Profil utilisateur</h1>
-
-<div class="container">
-    <div class="card">
-
-        <form action="/profil/edit" method="post" th:object="${user}">
-
-            <p>📝 Nom :
-                <input type="text" th:field="*{nom}" />
-            </p>
-
-            <p>📝 Prénom :
-                <input type="text" th:field="*{prenom}" />
-            </p>
-
-            <p>📧 Email :
-                <input type="email" th:field="*{email}" readonly />
-            </p>
-
-            <p>📱 Téléphone :
-                <input type="text" th:field="*{telephone}" />
-            </p>
-
-            <p>🏫 École :
-                <input type="text" th:field="*{ecole}" />
-            </p>
-
-            <p>🏠 Adresse :
-                <input type="text" th:field="*{adresse}" />
-            </p>
-
-            <p>🎓 Niveau scolaire :
-                <input type="text" th:field="*{niveauScolaire}" />
-            </p>
-
-            <button type="submit">💾 Sauvegarder</button>
-
-        </form>
-
-        <div class="links">
-            <a href="/dashboard">🏠 Dashboard</a> |
-            <a href="/offres">📋 Offres</a> |
-            <a href="/candidatures">📄 Candidatures</a> |
-            <a href="/logout">🚪 Déconnexion</a>
-        </div>
-
+<div class="navbar">
+    <div class="brand">🌿 StageMaroc</div>
+    <div class="nav-links">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/offres">Offres</a>
+        <a href="/candidatures">Candidatures</a>
+        <a href="/logout">Déconnexion</a>
     </div>
 </div>
-
+<div class="content">
+    <div class="profil-header">
+        <div class="avatar">👤</div>
+        <div>
+            <h2 th:text="${user.prenom + ' ' + user.nom}">Mon Profil</h2>
+            <p th:text="${user.email}"></p>
+        </div>
+    </div>
+    <div class="form-card">
+        <form action="/profil/edit" method="post" th:object="${user}">
+            <div class="form-row">
+                <div class="form-field"><label>Nom</label><input type="text" th:field="*{nom}"/></div>
+                <div class="form-field"><label>Prénom</label><input type="text" th:field="*{prenom}"/></div>
+            </div>
+            <div class="form-row">
+                <div class="form-field"><label>Email</label><input type="email" th:field="*{email}" readonly/></div>
+                <div class="form-field"><label>Téléphone</label><input type="text" th:field="*{telephone}" placeholder="+212 6xx xxx xxx"/></div>
+            </div>
+            <div class="form-row">
+                <div class="form-field"><label>École</label><input type="text" th:field="*{ecole}" placeholder="Votre école"/></div>
+                <div class="form-field"><label>Niveau scolaire</label><input type="text" th:field="*{niveauScolaire}" placeholder="Bac+3, Master..."/></div>
+            </div>
+            <div class="form-row">
+                <div class="form-field"><label>Adresse</label><input type="text" th:field="*{adresse}" placeholder="Votre adresse"/></div>
+            </div>
+            <button type="submit">💾 Sauvegarder les modifications</button>
+        </form>
+    </div>
+    <div class="footer-links">
+        <a href="/dashboard">🏠 Dashboard</a> |
+        <a href="/offres">📋 Offres</a> |
+        <a href="/candidatures">📄 Candidatures</a> |
+        <a href="/logout">🚪 Déconnexion</a>
+    </div>
+</div>
 </body>
 </html>
