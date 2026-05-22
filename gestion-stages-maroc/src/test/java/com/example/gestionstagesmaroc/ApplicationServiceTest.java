@@ -72,7 +72,6 @@ class ApplicationServiceTest {
 
         applicationService.postuler("test@test.com", 1L);
 
-        // Ne doit pas sauvegarder une deuxième fois
         verify(appRepo, never()).save(any(Application.class));
     }
 
@@ -105,4 +104,8 @@ class ApplicationServiceTest {
     void testGetApplicationsByUserEmail_userNull() {
         when(userRepo.findByEmail("nobody@test.com")).thenReturn(null);
 
-        List<Applic
+        List<Application> result = applicationService.getApplicationsByUserEmail("nobody@test.com");
+
+        assertThat(result).isEmpty();
+    }
+}
