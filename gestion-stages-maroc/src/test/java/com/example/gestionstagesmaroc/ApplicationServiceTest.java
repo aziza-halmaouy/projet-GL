@@ -14,13 +14,11 @@ class ApplicationServiceTest {
 
     @Test
     void testGetApplications() {
-        assertThat(applicationService
-                .getApplicationsByUserEmail("test@test.com")).isEmpty();
+        assertThat(applicationService.getApplicationsByUserEmail("test@test.com")).isEmpty();
     }
 
     @Test
     void testPostuler() {
-        // Ne doit pas planter si user/internship n'existe pas
         applicationService.postuler("test@test.com", 999L);
     }
 }
