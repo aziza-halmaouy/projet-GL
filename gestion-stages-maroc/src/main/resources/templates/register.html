@@ -1,64 +1,215 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Inscription</title>
+    <meta charset="UTF-8">
+    <title>Connexion — StageMaroc</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont/dist/tabler-icons.min.css">
     <style>
+        :root {
+            --green-dark: #0f4c2a;
+            --green-mid:  #1a6b3c;
+            --green-light:#e8f5ee;
+            --gold:       #c9a84c;
+            --gold-light: #f0d080;
+            --bg:         #f0f4f1;
+            --border:     #e2ece5;
+            --text:       #374151;
+            --muted:      #9ca3af;
+            --font-head:  'Sora', sans-serif;
+            --font-body:  'DM Sans', sans-serif;
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #0f4c2a, #1a6b3c);
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
+            font-family: var(--font-body);
+            background: var(--green-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
-        .card {
-            background: #fff; padding: 36px 32px; border-radius: 16px;
-            border: 1px solid #c9a84c; width: 400px;
-            box-shadow: 0 8px 32px rgba(15,76,42,0.25);
+        /* Background pattern */
+        body::before {
+            content: '';
+            position: absolute; inset: 0;
+            background-image:
+                    radial-gradient(circle at 20% 20%, rgba(201,168,76,0.12) 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, rgba(26,107,60,0.4) 0%, transparent 50%),
+                    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            pointer-events: none;
         }
-        .logo {
-            width: 60px; height: 60px; border-radius: 50%;
-            background: linear-gradient(135deg, #1a6b3c, #c9a84c);
-            display: flex; align-items: center; justify-content: center;
-            margin: 0 auto 16px; font-size: 26px;
+        .auth-wrap {
+            position: relative; z-index: 1;
+            display: flex; align-items: center; gap: 60px;
+            padding: 20px;
         }
-        h1 { text-align: center; color: #0f4c2a; font-size: 22px; margin-bottom: 4px; }
-        .subtitle { text-align: center; color: #6b7280; font-size: 13px; margin-bottom: 24px; }
-        label { display: block; font-size: 11px; font-weight: bold; color: #1a6b3c; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
-        input {
-            width: 100%; padding: 11px 14px; margin-bottom: 14px;
-            border: 1.5px solid #d4e8db; border-radius: 8px;
-            font-size: 14px; color: #0f4c2a; background: #f5f9f6;
+        /* Left brand panel */
+        .brand-panel {
+            display: flex; flex-direction: column; align-items: flex-start;
+            color: white; max-width: 320px;
         }
-        input:focus { border-color: #1a6b3c; outline: none; }
-        button {
+        .brand-logo {
+            width: 52px; height: 52px; border-radius: 14px;
+            background: var(--gold); display: flex; align-items: center;
+            justify-content: center; color: var(--green-dark);
+            font-size: 24px; margin-bottom: 20px;
+        }
+        .brand-panel h1 {
+            font-family: var(--font-head); font-size: 32px; font-weight: 600;
+            color: var(--gold-light); line-height: 1.2; margin-bottom: 12px;
+        }
+        .brand-panel p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+        .brand-features { margin-top: 28px; display: flex; flex-direction: column; gap: 10px; }
+        .feat {
+            display: flex; align-items: center; gap: 10px;
+            font-size: 13px; color: rgba(255,255,255,0.7);
+        }
+        .feat-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+        /* Card */
+        .auth-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 38px 36px;
+            width: 400px;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.25);
+        }
+        .card-logo {
+            width: 48px; height: 48px; border-radius: 12px;
+            background: var(--green-dark); display: flex;
+            align-items: center; justify-content: center;
+            color: var(--gold); font-size: 22px;
+            margin: 0 auto 18px;
+        }
+        .auth-card h2 {
+            font-family: var(--font-head); text-align: center;
+            font-size: 20px; font-weight: 600; color: var(--green-dark); margin-bottom: 4px;
+        }
+        .auth-card .sub {
+            text-align: center; font-size: 13px; color: var(--muted); margin-bottom: 28px;
+        }
+
+        .a-label {
+            display: block; font-size: 11px; font-weight: 600;
+            color: var(--green-mid); text-transform: uppercase;
+            letter-spacing: 0.8px; margin-bottom: 6px;
+        }
+        .a-input {
+            width: 100%; padding: 10px 13px; margin-bottom: 16px;
+            border: 1.5px solid var(--border); border-radius: 9px;
+            font-size: 14px; color: var(--text); background: #f9fafb;
+            font-family: var(--font-body); transition: border-color 0.2s, background 0.2s;
+        }
+        .a-input:focus { border-color: var(--green-mid); outline: none; background: #fff; }
+
+        .a-btn {
             width: 100%; padding: 12px;
-            background: linear-gradient(135deg, #1a6b3c, #c9a84c);
-            border: none; border-radius: 8px;
-            color: white; font-size: 15px; font-weight: bold; cursor: pointer;
+            background: var(--green-dark); color: #fff;
+            border: none; border-radius: 9px;
+            font-size: 14px; font-weight: 600; cursor: pointer;
+            font-family: var(--font-body); margin-bottom: 16px;
+            transition: background 0.2s;
         }
-        button:hover { opacity: 0.92; }
-        .error { color: #b91c1c; text-align: center; margin-bottom: 12px; font-size: 13px; background: #fee2e2; padding: 8px; border-radius: 6px; }
-        .links { text-align: center; margin-top: 18px; font-size: 13px; color: #6b7280; }
-        .links a { color: #1a6b3c; text-decoration: none; font-weight: bold; }
+        .a-btn:hover { background: var(--green-mid); }
+
+        .a-divider {
+            display: flex; align-items: center; gap: 10px; margin: 4px 0 14px;
+        }
+        .a-divider span { font-size: 12px; color: var(--muted); white-space: nowrap; }
+        .a-divider::before, .a-divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+        .a-social {
+            width: 100%; padding: 10px; border: 1.5px solid var(--border);
+            border-radius: 9px; background: #fff; font-size: 13px; color: var(--text);
+            cursor: pointer; font-family: var(--font-body);
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: border-color 0.2s, background 0.2s; text-decoration: none;
+        }
+        .a-social:hover { border-color: var(--green-mid); background: var(--green-light); }
+
+        .a-footer { text-align: center; font-size: 13px; color: var(--muted); margin-top: 20px; }
+        .a-footer a { color: var(--green-mid); font-weight: 600; text-decoration: none; }
+        .a-footer a:hover { text-decoration: underline; }
+
+        .alert-error {
+            background: #fee2e2; color: #991b1b;
+            padding: 9px 13px; border-radius: 8px;
+            font-size: 13px; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 7px;
+        }
+        .alert-success {
+            background: #dcfce7; color: #14532d;
+            padding: 9px 13px; border-radius: 8px;
+            font-size: 13px; margin-bottom: 16px;
+            display: flex; align-items: center; gap: 7px;
+        }
+
+        @media (max-width: 700px) {
+            .brand-panel { display: none; }
+            .auth-wrap { justify-content: center; }
+            .auth-card { width: 100%; max-width: 400px; }
+        }
     </style>
 </head>
 <body>
-<div class="card">
-    <div class="logo">✨</div>
-    <h1>Créer un compte</h1>
-    <p class="subtitle">Rejoignez la plateforme StageMaroc</p>
-    <p class="error" th:if="${error}" th:text="${error}"></p>
-    <form action="/register" method="post">
-        <label>Nom</label>
-        <input type="text" name="nom" placeholder="Votre nom" required>
-        <label>Prénom</label>
-        <input type="text" name="prenom" placeholder="Votre prénom" required>
-        <label>Email</label>
-        <input type="email" name="email" placeholder="votre@email.com" required>
-        <label>Mot de passe</label>
-        <input type="password" name="password" placeholder="Choisissez un mot de passe" required>
-        <button type="submit">S'inscrire</button>
-    </form>
-    <div class="links">Déjà un compte ? <a href="/login">Se connecter</a></div>
+<div class="auth-wrap">
+    <!-- Left branding -->
+    <div class="brand-panel">
+        <div class="brand-logo"><i class="ti ti-plant-2"></i></div>
+        <h1>StageMaroc</h1>
+        <p>La plateforme de référence pour trouver votre stage au Maroc et gérer vos candidatures.</p>
+        <div class="brand-features">
+            <div class="feat"><div class="feat-dot"></div> Centaines d'offres de stage</div>
+            <div class="feat"><div class="feat-dot"></div> Suivi de vos candidatures en temps réel</div>
+            <div class="feat"><div class="feat-dot"></div> Profil étudiant personnalisé</div>
+        </div>
+    </div>
+
+    <!-- Auth card -->
+    <div class="auth-card">
+        <div class="card-logo"><i class="ti ti-plant-2"></i></div>
+        <h2>Bon retour !</h2>
+        <p class="sub">Connectez-vous à votre espace stages</p>
+
+        <div class="alert-error" th:if="${error}">
+            <i class="ti ti-alert-circle" style="font-size:15px"></i>
+            <span th:text="${error}"></span>
+        </div>
+        <div class="alert-success" th:if="${param.registered}">
+            <i class="ti ti-circle-check" style="font-size:15px"></i>
+            Compte créé avec succès ! Connectez-vous.
+        </div>
+        <div class="alert-success" th:if="${param.logout}">
+            <i class="ti ti-circle-check" style="font-size:15px"></i>
+            Vous avez été déconnecté.
+        </div>
+
+        <form action="/login" method="post">
+            <label class="a-label">Email</label>
+            <input class="a-input" type="email" name="email" placeholder="votre@email.com" required>
+            <label class="a-label">Mot de passe</label>
+            <input class="a-input" type="password" name="password" placeholder="••••••••" required>
+            <button class="a-btn" type="submit">Se connecter</button>
+        </form>
+
+        <div class="a-divider"><span>ou continuer avec</span></div>
+        <div class="a-social">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Continuer avec Google
+        </div>
+
+        <div class="a-footer">Pas de compte ? <a href="/register">S'inscrire</a></div>
+    </div>
 </div>
 </body>
-</html>>
+</html>

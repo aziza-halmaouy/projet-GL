@@ -28,7 +28,7 @@ public class InternshipController {
             return "redirect:/login";
         }
 
-        model.addAttribute("internships", internshipService.getAll()); // ✅ FIX
+        model.addAttribute("internships", internshipService.getAll());
         model.addAttribute("qrService", qrCodeService);
 
         return "offres";
