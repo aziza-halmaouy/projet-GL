@@ -20,10 +20,17 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Build with Maven
-        run: mvn -B package
+      - name: Build with Maven (skip tests)
+        run: mvn -B package -DskipTests
         working-directory: gestion-stages-maroc
 
       - name: Run tests
         run: mvn test
         working-directory: gestion-stages-maroc
+        env:
+          SPRING_DATASOURCE_URL: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE
+          SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.h2.Driver
+          SPRING_DATASOURCE_USERNAME: sa
+          SPRING_DATASOURCE_PASSWORD: ""
+          SPRING_JPA_HIBERNATE_DDL_AUTO: create-drop
+          SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.H2Dialect
