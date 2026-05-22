@@ -1,31 +1,26 @@
 package com.example.gestionstagesmaroc.service;
 
-import com.example.gestionstagesmaroc.model.Application;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class ApplicationServiceTest {
 
     @Autowired
-    private ApplicationService service;
-
-    @Test
-    void testPostuler() {
-        service.postuler("test@gmail.com", 1L);
-        assertTrue(true);
-    }
+    private ApplicationService applicationService;
 
     @Test
     void testGetApplications() {
-        List<Application> list =
-                service.getApplicationsByUserEmail("test@gmail.com");
+        assertThat(applicationService
+                .getApplicationsByUserEmail("test@test.com")).isEmpty();
+    }
 
-        assertNotNull(list);
+    @Test
+    void testPostuler() {
+        // Ne doit pas planter si user/internship n'existe pas
+        applicationService.postuler("test@test.com", 999L);
     }
 }

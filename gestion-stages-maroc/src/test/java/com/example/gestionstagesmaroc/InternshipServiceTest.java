@@ -1,29 +1,24 @@
 package com.example.gestionstagesmaroc.service;
 
-import com.example.gestionstagesmaroc.model.Internship;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class InternshipServiceTest {
 
     @Autowired
-    private InternshipService service;
+    private InternshipService internshipService;
 
     @Test
     void testGetAll() {
-        List<Internship> list = service.getAll();
-        assertNotNull(list);
+        assertThat(internshipService.getAll()).isNotNull();
     }
 
     @Test
     void testGetById() {
-        Internship i = service.getById(1L);
-        assertTrue(i == null || i.getId() != null);
+        assertThat(internshipService.getById(999L)).isNull();
     }
 }
