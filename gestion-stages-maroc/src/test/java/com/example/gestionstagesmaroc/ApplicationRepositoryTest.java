@@ -1,20 +1,26 @@
-package com.example.gestionstagesmaroc;
+package com.example.gestionstagesmaroc.repository;
 
 import com.example.gestionstagesmaroc.model.Application;
 import com.example.gestionstagesmaroc.model.Internship;
 import com.example.gestionstagesmaroc.model.User;
-import com.example.gestionstagesmaroc.repository.ApplicationRepository;
-import com.example.gestionstagesmaroc.repository.InternshipRepository;
-import com.example.gestionstagesmaroc.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.context.TestPropertySource;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest
+@TestPropertySource(properties = {
+        "spring.datasource.url=jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;NON_KEYWORDS=VALUE",
+        "spring.datasource.driver-class-name=org.h2.Driver",
+        "spring.datasource.username=sa",
+        "spring.datasource.password=",
+        "spring.jpa.hibernate.ddl-auto=create-drop",
+        "spring.jpa.database-platform=org.hibernate.dialect.H2Dialect"
+})
 class ApplicationRepositoryTest {
 
     @Autowired
@@ -33,7 +39,6 @@ class ApplicationRepositoryTest {
 
     @Test
     void testSaveAndFindByUser() {
-        // Créer un user
         User user = new User();
         user.setNom("Alami");
         user.setPrenom("Youssef");
@@ -41,7 +46,6 @@ class ApplicationRepositoryTest {
         user.setPassword("1234");
         userRepository.save(user);
 
-        // Créer un internship
         Internship internship = new Internship();
         internship.setTitle("Stage Dev");
         internship.setCompany("TechMaroc");
@@ -49,14 +53,12 @@ class ApplicationRepositoryTest {
         internship.setDuration("2 mois");
         internshipRepository.save(internship);
 
-        // Créer une application
         Application app = new Application();
         app.setUser(user);
         app.setInternship(internship);
         app.setStatus("En attente");
         applicationRepository.save(app);
 
-        // Vérifier
         List<Application> apps = applicationRepository.findByUser(user);
         assertThat(apps).hasSize(1);
         assertThat(apps.get(0).getStatus()).isEqualTo("En attente");
