@@ -19,15 +19,13 @@ public class User {
     private String adresse;
     private String niveauScolaire;
 
-    @Lob
-    @Column(name = "cv_data")
+    @Column(name = "cv_data", columnDefinition = "BYTEA")
     private byte[] cvData;
 
     private String cvFileName;
 
     public User() {}
 
-    // Getters & Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
