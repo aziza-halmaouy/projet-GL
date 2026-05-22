@@ -112,8 +112,24 @@ class InternshipControllerTest {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userEmail", "test@test.com");
 
+        // Internship complet
+        Internship internship = new Internship();
+        internship.setId(1L);
+        internship.setTitle("Stage Dev");
+        internship.setCompany("TechMaroc");
+        internship.setLocation("Casablanca");
+        internship.setDuration("2 mois");
+        internship.setWebsite("https://techmaroc.ma");
+
+        // User complet
+        User user = new User();
+        user.setEmail("test@test.com");
+
+        // Application complète
         Application app = new Application();
         app.setStatus("En attente");
+        app.setUser(user);
+        app.setInternship(internship);
 
         when(applicationService.getApplicationsByUserEmail("test@test.com"))
                 .thenReturn(List.of(app));
