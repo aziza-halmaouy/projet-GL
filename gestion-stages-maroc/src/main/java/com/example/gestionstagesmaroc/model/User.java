@@ -19,6 +19,8 @@ public class User {
     private String adresse;
     private String niveauScolaire;
 
+    private String cvPath;
+
     public User() {}
 
     // Getters & Setters
@@ -48,4 +50,8 @@ public class User {
 
     public String getNiveauScolaire() { return niveauScolaire; }
     public void setNiveauScolaire(String niveauScolaire) { this.niveauScolaire = niveauScolaire; }
+
+    // Getter & Setter pour le CV
+    public String getCvPath() { return cvPath; }
+    public void setCvPath(String cvPath) { this.cvPath = cvPath; }
 }

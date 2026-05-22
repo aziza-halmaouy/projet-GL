@@ -1,3 +1,4 @@
+com\example\gestionstagesmaroc\controller\CVController.class
 com\example\gestionstagesmaroc\service\ApplicationService.class
 com\example\gestionstagesmaroc\service\QRCodeService.class
 com\example\gestionstagesmaroc\model\User.class
