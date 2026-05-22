@@ -3,18 +3,13 @@ package com.example.gestionstagesmaroc.controller;
 import com.example.gestionstagesmaroc.model.User;
 import com.example.gestionstagesmaroc.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 @Controller
 public class CVController {
@@ -33,10 +28,10 @@ public class CVController {
 
         User user = userRepo.findByEmail(email);
         model.addAttribute("user", user);
-        return "cv"; // Vue Thymeleaf à créer
+        return "cv";
     }
 
-    // Upload du CV
+    // Upload CV → stocké en base de données
     @PostMapping("/cv/upload")
     public String uploadCV(@RequestParam("cvFile") MultipartFile cvFile,
                            HttpSession session) {
@@ -46,14 +41,8 @@ public class CVController {
         User user = userRepo.findByEmail(email);
         if (user != null && !cvFile.isEmpty()) {
             try {
-                String uploadDir = "uploads/cv/";
-                String fileName = user.getId() + "_" + cvFile.getOriginalFilename();
-                Path filePath = Paths.get(uploadDir, fileName);
-
-                Files.createDirectories(filePath.getParent());
-                cvFile.transferTo(filePath.toFile());
-
-                user.setCvPath(fileName); // champ à ajouter dans User
+                user.setCvData(cvFile.getBytes());
+                user.setCvFileName(cvFile.getOriginalFilename());
                 userRepo.save(user);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -62,22 +51,28 @@ public class CVController {
         return "redirect:/cv";
     }
 
-    // Télécharger le CV
-    @GetMapping("/cv/download/{filename}")
+    // Télécharger le CV depuis la base de données
+    @GetMapping("/cv/download")
     @ResponseBody
-    public ResponseEntity<Resource> downloadCV(@PathVariable String filename) {
-        try {
-            Path filePath = Paths.get("uploads/cv/").resolve(filename).normalize();
-            Resource resource = new UrlResource(filePath.toUri());
+    public ResponseEntity<byte[]> downloadCV(HttpSession session) {
+        String email = (String) session.getAttribute("userEmail");
+        if (email == null) return ResponseEntity.status(401).build();
 
-            if (resource.exists()) {
-                return ResponseEntity.ok()
-                        .header(HttpHeaders.CONTENT_DISPOSITION,
-                                "attachment; filename=\"" + resource.getFilename() + "\"")
-                        .body(resource);
+        User user = userRepo.findByEmail(email);
+        if (user != null && user.getCvData() != null) {
+
+            // Déterminer le type de fichier
+            String fileName = user.getCvFileName() != null ? user.getCvFileName() : "cv";
+            MediaType mediaType = MediaType.APPLICATION_PDF;
+            if (fileName.endsWith(".doc") || fileName.endsWith(".docx")) {
+                mediaType = MediaType.APPLICATION_OCTET_STREAM;
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION,
+                            "attachment; filename=\"" + fileName + "\"")
+                    .contentType(mediaType)
+                    .body(user.getCvData());
         }
         return ResponseEntity.notFound().build();
     }

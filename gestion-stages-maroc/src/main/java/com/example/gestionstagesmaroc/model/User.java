@@ -19,7 +19,11 @@ public class User {
     private String adresse;
     private String niveauScolaire;
 
-    private String cvPath;
+    @Lob
+    @Column(name = "cv_data", columnDefinition = "BYTEA")
+    private byte[] cvData;
+
+    private String cvFileName;
 
     public User() {}
 
@@ -51,7 +55,9 @@ public class User {
     public String getNiveauScolaire() { return niveauScolaire; }
     public void setNiveauScolaire(String niveauScolaire) { this.niveauScolaire = niveauScolaire; }
 
-    // Getter & Setter pour le CV
-    public String getCvPath() { return cvPath; }
-    public void setCvPath(String cvPath) { this.cvPath = cvPath; }
+    public byte[] getCvData() { return cvData; }
+    public void setCvData(byte[] cvData) { this.cvData = cvData; }
+
+    public String getCvFileName() { return cvFileName; }
+    public void setCvFileName(String cvFileName) { this.cvFileName = cvFileName; }
 }
