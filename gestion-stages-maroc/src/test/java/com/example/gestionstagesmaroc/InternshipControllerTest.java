@@ -1,8 +1,9 @@
 package com.example.gestionstagesmaroc;
 
 import com.example.gestionstagesmaroc.controller.InternshipController;
-import com.example.gestionstagesmaroc.model.Internship;
 import com.example.gestionstagesmaroc.model.Application;
+import com.example.gestionstagesmaroc.model.Internship;
+import com.example.gestionstagesmaroc.model.User;
 import com.example.gestionstagesmaroc.service.ApplicationService;
 import com.example.gestionstagesmaroc.service.InternshipService;
 import com.example.gestionstagesmaroc.service.QRCodeService;
@@ -112,7 +113,6 @@ class InternshipControllerTest {
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userEmail", "test@test.com");
 
-        // Internship complet
         Internship internship = new Internship();
         internship.setId(1L);
         internship.setTitle("Stage Dev");
@@ -121,11 +121,9 @@ class InternshipControllerTest {
         internship.setDuration("2 mois");
         internship.setWebsite("https://techmaroc.ma");
 
-        // User complet
         User user = new User();
         user.setEmail("test@test.com");
 
-        // Application complète
         Application app = new Application();
         app.setStatus("En attente");
         app.setUser(user);
