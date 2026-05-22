@@ -26,19 +26,21 @@ public class ApplicationService {
         Internship internship = internshipRepo.findById(internshipId).orElse(null);
 
         if (user != null && internship != null) {
-            Application app = new Application();
-            app.setUser(user);
-            app.setInternship(internship);
-            app.setStatus("En attente");
-            appRepo.save(app);
+            boolean dejaPostule = appRepo.findByUser(user).stream()
+                    .anyMatch(app -> app.getInternship().getId().equals(internshipId));
+
+            if (!dejaPostule) {
+                Application app = new Application();
+                app.setUser(user);
+                app.setInternship(internship);
+                app.setStatus("En attente");
+                appRepo.save(app);
+            }
         }
     }
 
     public List<Application> getApplicationsByUserEmail(String email) {
         User user = userRepo.findByEmail(email);
-        return (user != null) ? appRepo.findAll().stream()
-                                .filter(app -> app.getUser().getEmail().equals(email))
-                                .toList()
-                : List.of();
+        return (user != null) ? appRepo.findByUser(user) : List.of();
     }
 }

@@ -13,7 +13,6 @@
             align-items: center;
             min-height: 100vh;
         }
-
         .container {
             background: #fff;
             padding: 30px;
@@ -21,18 +20,8 @@
             box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
             width: 600px;
         }
-
-        h1 {
-            text-align: center;
-            color: #333;
-            margin-bottom: 25px;
-        }
-
-        ul {
-            list-style: none;
-            padding: 0;
-        }
-
+        h1 { text-align: center; color: #333; margin-bottom: 25px; }
+        ul { list-style: none; padding: 0; }
         li {
             background: #f9f9f9;
             margin-bottom: 15px;
@@ -41,51 +30,39 @@
             box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
             font-size: 16px;
             color: #555;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-
-        li span {
-            font-weight: bold;
-        }
-
-        .status-attente {
-            color: #FFD700;
-        }
-
-        .links {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .links a {
-            color: #4facfe;
-            text-decoration: none;
-            margin: 0 10px;
-            font-size: 14px;
-        }
-
-        .links a:hover {
-            text-decoration: underline;
-        }
+        .status-attente { color: #e6a817; font-weight: bold; }
+        .empty { text-align: center; color: #999; font-size: 16px; margin: 20px 0; }
+        .links { text-align: center; margin-top: 20px; }
+        .links a { color: #4facfe; text-decoration: none; margin: 0 10px; font-size: 14px; }
+        .links a:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
-
 <div class="container">
     <h1>📑 Mes candidatures</h1>
 
+    <p class="empty" th:if="${#lists.isEmpty(applications)}">
+        😕 Vous n'avez pas encore postulé à un stage.
+    </p>
+
     <ul>
         <li th:each="app : ${applications}">
-            🎯 <span th:text="${app.internship.title}"></span> —
+            <span>🎯 <strong th:text="${app.internship.title}"></strong>
+                — <span th:text="${app.internship.company}"></span></span>
             <span th:text="${app.status}"
-                  th:classappend="${app.status == 'En attente'} ? 'status-attente' : ''"></span>
+                  th:class="${app.status == 'En attente'} ? 'status-attente' : ''"></span>
         </li>
     </ul>
 
     <div class="links">
-        <a href="/dashboard">🏠 Retour au tableau de bord</a>
+        <a href="/offres">💼 Voir les offres</a> |
+        <a href="/dashboard">🏠 Tableau de bord</a>
     </div>
 </div>
-
 </body>
 </html>
 
