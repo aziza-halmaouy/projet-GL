@@ -20,7 +20,7 @@ public class User {
     private String niveauScolaire;
 
     @Lob
-    @Column(name = "cv_data", columnDefinition = "BYTEA")
+    @Column(name = "cv_data")
     private byte[] cvData;
 
     private String cvFileName;
